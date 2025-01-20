@@ -1,0 +1,7 @@
+certifi==2024.12.14
+charset-normalizer==3.4.1
+idna==3.10
+prettytable==3.12.0
+requests==2.32.3
+urllib3==2.3.0
+wcwidth==0.2.13
