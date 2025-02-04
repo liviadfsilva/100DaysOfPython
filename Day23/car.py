@@ -5,7 +5,7 @@ class Car(Turtle):
         super().__init__()
         self.color("maroon")
         self.shape("square")
-        self.shapesize(1, 1)
+        self.shapesize(1, 2)
         self.penup()
         self.goto(x=270, y=0)
 
