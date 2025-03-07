@@ -13,7 +13,7 @@ day = birthday_date.day
 
 birthdays = pandas.read_csv("birthdays.csv")
 
-for i in range(3):
+for i in range(len(birthdays)):
     if month == birthdays["month"][i] and day == birthdays["day"][i]:
         file_path = f"letter_templates/letter_{random.randint(1, 3)}.txt"
 
