@@ -9,7 +9,7 @@ password = "zutotvlxbjbnqlkx"
 MY_LAT = -21.021532 # Your latitude
 MY_LONG = -47.768211 # Your longitude
 
-def is_iss__nearby():
+def is_iss_nearby():
     response = requests.get(url="http://api.open-notify.org/iss-now.json")
     response.raise_for_status()
     data = response.json()
