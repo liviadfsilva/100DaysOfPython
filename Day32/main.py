@@ -5,7 +5,7 @@ import random
 import smtplib
 
 my_email = "parakeet.test013@gmail.com"
-password = "zutotvlxbjbnqlkx"
+password = "yourpasswordhere"
 
 birthday_date = date.today()
 month = birthday_date.month

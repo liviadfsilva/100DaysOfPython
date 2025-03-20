@@ -3,7 +3,7 @@ import datetime as dt
 import random
 
 my_email = "parakeet.test013@gmail.com"
-password = "zutotvlxbjbnqlkx"
+password = "yourpasswordhere"
 
 message = random.randint(0, 102)
 
