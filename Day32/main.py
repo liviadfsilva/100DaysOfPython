@@ -3,9 +3,10 @@ import pandas
 from datetime import date
 import random
 import smtplib
+import os
 
 my_email = "parakeet.test013@gmail.com"
-password = "yourpasswordhere"
+password = os.environ.get("email_test_password")
 
 birthday_date = date.today()
 month = birthday_date.month

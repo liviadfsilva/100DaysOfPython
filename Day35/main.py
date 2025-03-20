@@ -1,11 +1,12 @@
 import requests
 import smtplib
+import os
 
 my_email = "parakeet.test013@gmail.com"
-password = "yourpasswordhere"
+password = os.environ.get("email_test_password")
 
 weather_endpoint = "https://api.openweathermap.org/data/2.5/forecast"
-api_key = "9924a81a577c76a5a40d1edd7d015519"
+api_key = os.environ.get("weather_map_api_key")
 
 
 weather_params = {

@@ -1,9 +1,10 @@
 import smtplib
 import datetime as dt
 import random
+import os
 
 my_email = "parakeet.test013@gmail.com"
-password = "yourpasswordhere"
+password = os.environ.get("email_test_password")
 
 message = random.randint(0, 102)
 
