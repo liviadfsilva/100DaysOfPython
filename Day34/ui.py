@@ -34,6 +34,7 @@ class QuizInterface:
 
     def get_next_question(self):
         self.canvas.config(bg="white")
+        self.score_label.config(text=f"Score: {self.quiz.score}")
         question_text = self.quiz.next_question()
         self.canvas.itemconfig(self.canvas_question, text=question_text)
 
