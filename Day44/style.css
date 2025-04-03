@@ -1,0 +1,31 @@
+.font-color {
+    font-family: "Libre Baskerville", serif;
+    font-weight: 400;
+    font-style: normal;
+    color: white;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+#html {
+    background-color: black;
+}
+
+#myimg {
+    border: 5px solid white;
+    width: 100%;
+}
+
+#mydiv {
+    width: 50%;
+    margin: 26%;
+    margin-top: 25px;
+}
+
+#paragraph {
+    font-family: "Libre Baskerville", serif;
+    font-weight: 400;
+    font-style: normal;
+    color: white;
+    text-align: center;
+}
