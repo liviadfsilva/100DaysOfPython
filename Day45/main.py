@@ -17,8 +17,6 @@ for i in titles:
             
 # print(titles_only)
 
-for i in titles_only:
-    if i == "Director:" or i == "Starring:":
-        titles_only.remove(i)
-        
-print(titles_only)
+final_result = [i for i in titles_only if i not in ["Director:", "Directors:", "Starring:", "READ MORE:"]]
+final_result.reverse()
+print(final_result)
