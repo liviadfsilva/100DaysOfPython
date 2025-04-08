@@ -15,8 +15,6 @@ for i in titles:
     result = i.getText()
     titles_only.append(result)
             
-# print(titles_only)
-
 final_result = [i for i in titles_only if i not in ["Director:", "Directors:", "Starring:", "READ MORE:"]]
 final_result.reverse()
 print(final_result)
