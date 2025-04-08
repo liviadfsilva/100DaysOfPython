@@ -17,4 +17,7 @@ for i in titles:
             
 final_result = [i for i in titles_only if i not in ["Director:", "Directors:", "Starring:", "READ MORE:"]]
 final_result.reverse()
-print(final_result)
+
+for i in final_result:
+    with open("Day45/movies.txt", mode="a") as movies:
+        movies.write(f"{i}\n")
