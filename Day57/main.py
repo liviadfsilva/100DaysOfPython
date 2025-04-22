@@ -3,14 +3,15 @@ from post import Post
 
 app = Flask(__name__)
 
-@app.route('/')
+@app.route('/blog')
 def home():
     blog = Post()
     return render_template("index.html", posts=blog.data)
 
-@app.route("/post/<id>")
-def blog_post(id):
-    return render_template("post.html")
+@app.route("/post/<int:index>")
+def blog_post(index):
+    test = Post()
+    return render_template("post.html", index=test.show_post(index))
 
 if __name__ == "__main__":
     app.run(debug=True)
