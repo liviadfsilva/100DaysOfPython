@@ -3,7 +3,7 @@ from post import Post
 
 app = Flask(__name__)
 
-@app.route('/blog')
+@app.route('/')
 def home():
     blog = Post()
     return render_template("index.html", posts=blog.data)
