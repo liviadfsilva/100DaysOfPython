@@ -1,7 +1,11 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect, url_for
 from post import Post
 
 app = Flask(__name__)
+
+@app.route('/')
+def index():
+    return redirect(url_for('home'))
 
 @app.route('/blog')
 def home():
