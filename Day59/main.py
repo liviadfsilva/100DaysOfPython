@@ -1,5 +1,6 @@
 from flask import Flask, render_template
 import requests
+import datetime
 
 response = requests.get("https://api.npoint.io/3eda880271a88ac6a482")
 data = response.json()
@@ -9,6 +10,10 @@ app = Flask(__name__)
 @app.route("/")
 def home_page():
     return render_template("index.html", posts=data)
+
+@app.context_processor
+def inject_year():
+    return {'copyright_year': datetime.datetime.now().strftime('%Y')}
 
 @app.route("/about")
 def about_page():
