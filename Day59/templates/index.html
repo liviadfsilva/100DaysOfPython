@@ -6,7 +6,7 @@
                     <div class="col-md-10 col-lg-8 col-xl-7">
                         <div class="site-heading">
                             <h1>Lily's Blog</h1>
-                            <span class="subheading">A collection of my musings.</span>
+                            <span class="subheading">A collection of random musings.</span>
                         </div>
                     </div>
                 </div>
@@ -19,7 +19,7 @@
                     <!-- Post preview-->
                      {% for i in posts: %}
                     <div class="post-preview">
-                        <a href="post.html">
+                        <a href="{{ url_for('blog_post', index=i.id) }}">
                             <h2 class="post-title">{{ i.title }}</h2>
                             <h3 class="post-subtitle">{{ i.subtitle }}</h3>
                         </a>

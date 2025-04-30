@@ -18,5 +18,13 @@ def about_page():
 def contact_page():
     return render_template("contact.html")
 
+@app.route("/post/<int:index>")
+def blog_post(index):
+    requested_post = None
+    for i in data:
+        if i["id"] == index:
+            requested_post = i
+    return render_template("post.html", post=requested_post)
+
 if __name__ == "__main__":
     app.run(debug=True)
