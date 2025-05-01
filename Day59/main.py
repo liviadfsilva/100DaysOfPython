@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 import requests
 import datetime
 
@@ -22,6 +22,20 @@ def about_page():
 @app.route("/contact")
 def contact_page():
     return render_template("contact.html")
+
+@app.route("/form-entry", methods=["POST"])
+def receive_data():
+    error = None
+    if request.method == 'POST':
+        name = request.form["name"]
+        email = request.form['email']
+        phone = request.form['phone']
+        message = request.form['message']
+        print(name + "\n" + email + "\n" + phone + "\n" + message + "\n")
+        return "<h1>Message successfully sent!<h1>"
+    else:
+        error = 'Invalid username/password'
+        return error
 
 @app.route("/post/<int:index>")
 def blog_post(index):
