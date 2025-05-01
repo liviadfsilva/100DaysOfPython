@@ -21,17 +21,14 @@ def about_page():
 
 @app.route("/contact", methods=["GET", "POST"])
 def contact_page():
-    if request.method == 'GET':
-        return render_template("contact.html")
-    elif request.method == 'POST':
+    if request.method == 'POST':
         name = request.form["name"]
         email = request.form['email']
         phone = request.form['phone']
         message = request.form['message']
         print(name + "\n" + email + "\n" + phone + "\n" + message + "\n")
-        return "<h1>Message successfully sent!<h1>"
-    else:
-        return "Try again later."
+        return render_template("contact.html", msg_sent=True)
+    return render_template("contact.html", msg_sent=False)
 
 @app.route("/post/<int:index>")
 def blog_post(index):
