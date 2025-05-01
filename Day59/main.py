@@ -1,6 +1,10 @@
 from flask import Flask, render_template, request
 import requests
 import datetime
+import smtplib
+
+OWN_EMAIL = "youremail@example.com"
+OWN_PASSWORD = "yourpassword"
 
 response = requests.get("https://api.npoint.io/3eda880271a88ac6a482")
 data = response.json()
@@ -22,13 +26,17 @@ def about_page():
 @app.route("/contact", methods=["GET", "POST"])
 def contact_page():
     if request.method == 'POST':
-        name = request.form["name"]
-        email = request.form['email']
-        phone = request.form['phone']
-        message = request.form['message']
-        print(name + "\n" + email + "\n" + phone + "\n" + message + "\n")
+        data = request.form
+        send_email(data["name"], data["email"], data["phone"], data["message"])        
         return render_template("contact.html", msg_sent=True)
     return render_template("contact.html", msg_sent=False)
+
+def send_email(name, email, phone, message):
+    email_message = f"Subject:New Message\n\nName: {name}\nEmail: {email}\nPhone: {phone}\nMessage:{message}"
+    with smtplib.SMTP("smtp.gmail.com") as connection:
+        connection.starttls()
+        connection.login(OWN_EMAIL, OWN_PASSWORD)
+        connection.sendmail(OWN_EMAIL, OWN_EMAIL, email_message)
 
 @app.route("/post/<int:index>")
 def blog_post(index):
