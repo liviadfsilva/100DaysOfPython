@@ -19,14 +19,11 @@ def inject_year():
 def about_page():
     return render_template("about.html")
 
-@app.route("/contact")
+@app.route("/contact", methods=["GET", "POST"])
 def contact_page():
-    return render_template("contact.html")
-
-@app.route("/form-entry", methods=["POST"])
-def receive_data():
-    error = None
-    if request.method == 'POST':
+    if request.method == 'GET':
+        return render_template("contact.html")
+    elif request.method == 'POST':
         name = request.form["name"]
         email = request.form['email']
         phone = request.form['phone']
@@ -34,8 +31,7 @@ def receive_data():
         print(name + "\n" + email + "\n" + phone + "\n" + message + "\n")
         return "<h1>Message successfully sent!<h1>"
     else:
-        error = 'Invalid username/password'
-        return error
+        return "Try again later."
 
 @app.route("/post/<int:index>")
 def blog_post(index):
