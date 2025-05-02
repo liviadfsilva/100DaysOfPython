@@ -1,7 +1,7 @@
 from flask import Flask, render_template
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
-from wtforms.validators import DataRequired
+from wtforms.validators import DataRequired, Length
 import os
 from dotenv import load_dotenv
 
@@ -11,7 +11,7 @@ app = Flask(__name__)
 
 class LoginForm(FlaskForm):
     email = StringField(label='Email', validators=[DataRequired()])
-    password = PasswordField(label='Password', validators=[DataRequired()])
+    password = PasswordField(label='Password', validators=[DataRequired(), Length(min=8, max=16, message=None)])
     submit = SubmitField(label='Log In')
     
 app.secret_key = os.getenv("APP_SECRET_KEY")
