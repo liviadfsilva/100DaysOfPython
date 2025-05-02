@@ -28,7 +28,6 @@ def login():
             return render_template("success.html")
         else:
             return render_template("denied.html")
-        print(login_form.email.data)
     return render_template("login.html", form=login_form)
 
 if __name__ == "__main__":
