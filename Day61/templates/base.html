@@ -2,11 +2,8 @@
 <html>
   <head>
     <title>{% block title %}{% endblock %}</title>
-    <style>
     {% block styling %}
-    body{
-        background: purple;
-    }
+    {{ bootstrap.load_css() }}
     {% endblock %}
     </style>
   </head>
