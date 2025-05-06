@@ -44,7 +44,7 @@ def add_cafe():
 
 @app.route('/cafes')
 def cafes():
-    with open('./cafe-data.csv', newline='', encoding='utf-8') as csv_file:
+    with open('Day62/cafe-data.csv', newline='', encoding='utf-8') as csv_file:
         csv_data = csv.reader(csv_file, delimiter=',')
         list_of_rows = []
         for row in csv_data:
@@ -52,4 +52,4 @@ def cafes():
     return render_template('cafes.html', cafes=list_of_rows)
 
 if __name__ == '__main__':
-    app.run(port=5001)
+    app.run(debug=True, port=5001)
