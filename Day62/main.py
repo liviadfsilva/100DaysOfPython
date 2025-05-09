@@ -1,16 +1,16 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect, url_for
 from flask_bootstrap import Bootstrap5
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, SelectField
 from wtforms.validators import DataRequired, URL
 import csv
-# import os
-# from dotenv import load_dotenv
+import os
+from dotenv import load_dotenv
 
-# load_dotenv()
+load_dotenv()
 
 app = Flask(__name__)
-app.secret_key = "this_is_my_secret_key"
+app.secret_key = os.getenv("APP_SECRET_KEY")
 Bootstrap5(app)
 
 class CafeForm(FlaskForm):
@@ -32,10 +32,15 @@ def home():
 def add_cafe():
     form = CafeForm()
     if form.validate_on_submit():
-        print("True")
-    # Exercise:
-    # Make the form write a new row into cafe-data.csv
-    # with   if form.validate_on_submit()
+        with open('Day62/cafe-data.csv', mode="a", encoding='utf-8') as new_cafe:
+            new_cafe.write(f"\n{form.cafe.data},"
+                           f"{form.location.data},"
+                           f"{form.open.data},"
+                           f"{form.closed.data},"
+                           f"{form.coffee.data},"
+                           f"{form.wifi.data},"
+                           f"{form.power_socket.data},")
+        return redirect(url_for('cafes'))
     return render_template('add.html', form=form)
 
 @app.route('/cafes')
