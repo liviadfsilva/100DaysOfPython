@@ -3,6 +3,12 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 from sqlalchemy import Integer, String, Boolean
 import random
+import os
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
 
 app = Flask(__name__)
 
@@ -94,6 +100,23 @@ def update_price(cafe_id):
         cafe.coffee_price = new_price
         db.session.commit()
         return jsonify(response={"success": "Successfully updated the price."}), 200
+    
+@app.route("/report-closed/<int:cafe_id>", methods=["DELETE"])
+def delete_cafe(cafe_id):
+    api_key = os.getenv("APP_SECRET_KEY")
+    token_input = request.args.get("token")
+    
+    if token_input == api_key:
+        try:
+            cafe = Cafe.query.get(cafe_id)
+        except AttributeError:
+            return jsonify(error={"Not Found": "Sorry a cafe with that id was not found in the database."}), 404
+        else:
+            db.session.delete(cafe)
+            db.session.commit()
+            return jsonify(response={"success": "Successfully deleted the cafe from the database."}), 200
+    else:
+        return jsonify(error={"Forbidden": "Sorry, that's not allowed. Make sure you have the correct api_key."}), 403
 
 if __name__ == '__main__':
     app.run(debug=True, port=5001)
