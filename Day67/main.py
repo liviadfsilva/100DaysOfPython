@@ -50,6 +50,9 @@ def show_post(post_id):
     return render_template("post.html", post=requested_post)
 
 # TODO: add_new_post() to create a new blog post
+@app.route('/add_new_post')
+def add_post():
+    return render_template("make-post.html")
 
 # TODO: edit_post() to change an existing blog post
 
