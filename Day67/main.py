@@ -6,12 +6,13 @@ from sqlalchemy import Integer, String, Text
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired, URL
-# from flask_ckeditor import CKEditor, CKEditorField
+from flask_ckeditor import CKEditor, CKEditorField
 from datetime import date
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
 Bootstrap5(app)
+ckeditor = CKEditor(app)
 
 # CREATE DATABASE
 class Base(DeclarativeBase):
@@ -19,7 +20,6 @@ class Base(DeclarativeBase):
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/liviasilva/Documents/Projects/100DaysOfPython/Day67/instance/posts.db'
 db = SQLAlchemy(model_class=Base)
 db.init_app(app)
-
 
 # CONFIGURE TABLE
 class BlogPost(db.Model):
@@ -34,6 +34,14 @@ class BlogPost(db.Model):
 
 with app.app_context():
     db.create_all()
+    
+class NewPost(FlaskForm):
+    title = StringField('Post Title')
+    subtitle = StringField('Subtitle')
+    your_name = StringField('Your Name')
+    img_url = StringField('Image URL')
+    post_content = CKEditorField('Post Content')
+    submit = SubmitField('Submit Post')
 
 @app.route('/')
 def get_all_posts():
@@ -52,7 +60,8 @@ def show_post(post_id):
 # TODO: add_new_post() to create a new blog post
 @app.route('/add_new_post')
 def add_post():
-    return render_template("make-post.html")
+    form = NewPost()
+    return render_template("make-post.html", form=form)
 
 # TODO: edit_post() to change an existing blog post
 
