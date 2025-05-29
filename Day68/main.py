@@ -44,7 +44,7 @@ def register():
         )
         db.session.add(new_user)
         db.session.commit()
-        return render_template('secrets.html')
+        return render_template('secrets.html', name=request.form.get('name'))
     return render_template("register.html")
 
 @app.route('/login')
@@ -64,4 +64,4 @@ def download():
     pass
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, port=5001)
