@@ -30,36 +30,38 @@ class User(db.Model):
 with app.app_context():
     db.create_all()
 
-
 @app.route('/')
 def home():
     return render_template("index.html")
 
-
-@app.route('/register')
+@app.route('/register', methods=["GET", "POST"])
 def register():
+    if request.method == "POST":
+        new_user = User(
+            email=request.form.get('email'),
+            password=request.form.get('password'),
+            name=request.form.get('name')
+        )
+        db.session.add(new_user)
+        db.session.commit()
+        return render_template('secrets.html')
     return render_template("register.html")
-
 
 @app.route('/login')
 def login():
     return render_template("login.html")
 
-
 @app.route('/secrets')
 def secrets():
     return render_template("secrets.html")
-
 
 @app.route('/logout')
 def logout():
     pass
 
-
 @app.route('/download')
 def download():
     pass
-
 
 if __name__ == "__main__":
     app.run(debug=True)
