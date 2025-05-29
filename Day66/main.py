@@ -4,11 +4,9 @@ from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 from sqlalchemy import Integer, String, Boolean
 import random
 import os
-import os
 from dotenv import load_dotenv
 
 load_dotenv()
-
 
 app = Flask(__name__)
 
