@@ -91,6 +91,12 @@
   }
 }
 
+.flash-message {
+  color: red;
+  margin-left: 220px;
+  font-style: italic;
+}
+
 body {
   margin: 0;
   font-family: var(--bs-body-font-family);
