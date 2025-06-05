@@ -42,25 +42,9 @@ def load_user(user_id):
 # CREATE DATABASE
 class Base(DeclarativeBase):
     pass
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/liviasilva/Documents/Projects/100DaysOfPython/Day69/instance/users.db'
-app.config['SQLALCHEMY_BINDS'] = {
-       'posts': 'sqlite:////Users/liviasilva/Documents/Projects/100DaysOfPython/Day69/instance/posts.db'
-   }
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/liviasilva/Documents/Projects/100DaysOfPython/Day69/instance/posts.db'
 db = SQLAlchemy(model_class=Base)
 db.init_app(app)
-
-
-# CONFIGURE TABLES
-class BlogPost(db.Model):
-    __bind_key__ = "posts"
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    title: Mapped[str] = mapped_column(String(250), unique=True, nullable=False)
-    subtitle: Mapped[str] = mapped_column(String(250), nullable=False)
-    date: Mapped[str] = mapped_column(String(250), nullable=False)
-    body: Mapped[str] = mapped_column(Text, nullable=False)
-    author: Mapped[str] = mapped_column(String(250), nullable=False)
-    img_url: Mapped[str] = mapped_column(String(250), nullable=False)
-
 
 # TODO: Create a User table for all your registered users. 
 class User(UserMixin, db.Model):
@@ -69,6 +53,23 @@ class User(UserMixin, db.Model):
     email: Mapped[str] = mapped_column(String(250), nullable=False)
     password: Mapped[str] = mapped_column(String(250), nullable=False)
     name: Mapped[str] = mapped_column(String(250), nullable=False)
+    
+    posts = relationship("BlogPost", back_populates="author")
+
+
+# CONFIGURE TABLES
+class BlogPost(db.Model):
+    __tablename__ = "blog_posts"
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    
+    author_id: Mapped[int] = mapped_column(Integer, db.ForeignKey("users.id"))
+    author = relationship("User", back_populates="posts")
+    
+    title: Mapped[str] = mapped_column(String(250), unique=True, nullable=False)
+    subtitle: Mapped[str] = mapped_column(String(250), nullable=False)
+    date: Mapped[str] = mapped_column(String(250), nullable=False)
+    body: Mapped[str] = mapped_column(Text, nullable=False)
+    img_url: Mapped[str] = mapped_column(String(250), nullable=False)
 
 with app.app_context():
     db.create_all()
@@ -140,9 +141,12 @@ def logout():
 
 @app.route('/')
 def get_all_posts():
-    result = db.session.execute(db.select(BlogPost))
-    posts = result.scalars().all()
-    return render_template("index.html", all_posts=posts)
+    try:
+        result = db.session.execute(db.select(BlogPost))
+        posts = result.scalars().all()
+        return render_template("index.html", all_posts=posts)
+    except Exception as e:
+        return f"Error loading posts: {e}"
 
 
 # TODO: Allow logged-in users to comment on posts
@@ -164,7 +168,7 @@ def add_new_post():
             subtitle=form.subtitle.data,
             body=form.body.data,
             img_url=form.img_url.data,
-            author=current_user.name,
+            author=current_user,
             date=date.today().strftime("%B %d, %Y")
         )
         db.session.add(new_post)
@@ -217,4 +221,4 @@ def contact():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5002)
+    app.run(debug=True, port=5001)
